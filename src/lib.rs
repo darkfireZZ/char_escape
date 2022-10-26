@@ -270,6 +270,27 @@ impl<'a> Escaper<'a> {
         }
     }
 
+    /// Returns a new [`String`] with the [`char`]s escaped according to the specified rules.
+    ///
+    /// ```
+    /// # use char_escape::escaper;
+    /// #
+    /// let escaper = escaper! {
+    ///     escape_char = '%',
+    ///     rules = [
+    ///         'a' => 'a',
+    ///         'c' => 'c',
+    ///         'e' => 'e',
+    ///         'p' => 'p',
+    ///         's' => 's',
+    ///     ],
+    /// };
+    ///
+    /// let unescaped = "escaper.escape(\"escaper\")";
+    /// let escaped = "%e%s%c%a%p%er.%e%s%c%a%p%e(\"%e%s%c%a%p%er\")";
+    ///
+    /// assert_eq!(escaper.escape(unescaped), escaped);
+    /// ```
     pub fn escape(&self, s: &str) -> String {
         let mut ret = String::with_capacity(2 * s.len());
 
@@ -292,7 +313,11 @@ impl<'a> Escaper<'a> {
         Some(self.rules.iter().find(|rule| rule.unescaped == c)?.escaped)
     }
 
-    /// Unescapes the given string.
+    /// Reverts what [`escape()`](Self::escape) does.
+    ///
+    // TODO proptest
+    /// Escaping a string and then unescaping it is guaranteed to always result in the original
+    /// string.
     ///
     /// ```
     /// # use char_escape::escaper;
@@ -379,7 +404,14 @@ impl<'a> Escaper<'a> {
     /// [`char`] that need to be escaped and it doesn't end with the escape character.
     ///
     // TODO proptest
-    /// If a string is escaped it is guaranteed that unescaping it will never generate an error.
+    /// If a string is escaped it is guaranteed that [unescaping](Escaper::unescape) it will never
+    /// generate an error.
+    ///
+    // TODO proptest
+    /// A string returned by [`escape()`](Self::escape) will always return true when tested if it
+    /// [`is_escaped()`](Self::is_escaped).
+    /// 
+    /// # Examples
     ///
     /// ```
     /// # use char_escape::escaper;
