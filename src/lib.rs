@@ -502,11 +502,14 @@ impl Display for UnescapeError {
 
 impl Error for UnescapeError {}
 
+/// Results from attempting to create an [`Escaper`] without a rule for escaping the escape
+/// [`char`].
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct MissingEscapeCharRule {}
 
 impl MissingEscapeCharRule {
+    /// Create a new [`MissingEscapeCharRule`].
     pub const fn new() -> Self {
         Self {}
     }
