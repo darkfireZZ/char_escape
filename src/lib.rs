@@ -380,6 +380,33 @@ impl<'a> Escaper<'a> {
     ///
     // TODO proptest
     /// If a string is escaped it is guaranteed that unescaping it will never generate an error.
+    ///
+    /// ```
+    /// # use char_escape::escaper;
+    /// #
+    /// let escaper = escaper! {
+    ///     escape_char = '\\',
+    ///     rules = [
+    ///         '&' => 'a',
+    ///         '\\' => 'b',
+    ///         '%' => 'm',
+    ///         '|' => 'p',
+    ///         '/' => 's',
+    ///     ],
+    /// };
+    ///
+    /// // contains invalid escape sequence
+    /// assert_eq!(escaper.is_escaped(r"\a  \b  \c  \d  \e"), false);
+    ///
+    /// // ends with the escape character
+    /// assert_eq!(escaper.is_escaped(r"\a  \b  \m  \p  \s  \"), false);
+    ///
+    /// // contains a char that should be escaped
+    /// assert_eq!(escaper.is_escaped(r"\a  \b  \m  \|  \s"), false);
+    ///
+    /// // and finally... the following is escaped
+    /// assert_eq!(escaper.is_escaped(r"\a  \b  \m  \p  \s"), true);
+    /// ```
     pub fn is_escaped(&self, s: &str) -> bool {
         let mut previous_was_escape_char = false;
         for c in s.chars() {
@@ -460,3 +487,5 @@ impl Display for MissingEscapeCharRule {
 }
 
 impl Error for MissingEscapeCharRule {}
+
+// TODO test how it handles non-ascii chars
