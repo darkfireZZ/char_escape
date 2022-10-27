@@ -26,7 +26,7 @@
 //! let multiline = "\
 //! one line
 //! two lines";
-//! 
+//!
 //! // If escaped with the rules defined above, this will be the result
 //! let escaped = "one line\\ntwo lines";
 //!
@@ -36,6 +36,13 @@
 //! // "Unescaping" reverses what escape does
 //! assert_eq!(RULES.unescape(escaped).expect("is properly escaped"), multiline);
 //! ```
+//!
+//! # How does it work?
+//!
+//! Have a look at the documentation of the following items:
+//!  - the [`escape()`](Escaper::escape) method
+//!  - the [`unescape()`](Escaper::unescape) method
+//!  - the [`escaper!`] macro
 //!
 //! # Quickstart
 //!
@@ -326,6 +333,37 @@ impl<'a> Escaper<'a> {
     ///
     /// assert_eq!(escaper.escape(unescaped), escaped);
     /// ```
+    ///
+    /// The [`escape()`](Escaper::escape) method iterates over all [`char`]s in the provided string,
+    /// checks if there is a rule for escaping the [`char`] and if there is, it will be replaced by
+    /// the escape sequence defined by the first rule that matches.
+    ///
+    /// This means that if there exist multiple rules for escaping the same [`char`], the first one
+    /// in the list is used.
+    ///
+    /// ```
+    /// # use char_escape::escaper;
+    /// #
+    /// let escaper = escaper! {
+    ///     'a' => 'a',
+    ///     // these rules aren't used
+    ///     'a' => 'b',
+    ///     'a' => 'c',
+    /// };
+    ///
+    /// assert_eq!(escaper.escape("all apes are alive"), r"\all \apes \are \alive");
+    /// ```
+    ///
+    /// This behaviour can be used to override the default rule for the escape character, since the
+    /// [`escaper!`] macro always appends that rule to the end of the list of rules.
+    ///
+    /// ```
+    /// let escape_char_escaper = char_escape::escaper! {
+    ///     '\\' => '#',
+    /// };
+    ///
+    /// assert_eq!(escape_char_escaper.escape("\\"), "\\#");
+    /// ```
     pub fn escape(&self, s: &str) -> String {
         let mut ret = String::with_capacity(2 * s.len());
 
@@ -445,7 +483,7 @@ impl<'a> Escaper<'a> {
     // TODO proptest
     /// A string returned by [`escape()`](Self::escape) will always return true when tested if it
     /// [`is_escaped()`](Self::is_escaped).
-    /// 
+    ///
     /// # Examples
     ///
     /// ```
