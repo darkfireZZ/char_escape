@@ -43,51 +43,6 @@
 //!  - the [`escape()`](Escaper::escape) method
 //!  - the [`unescape()`](Escaper::unescape) method
 //!  - the [`escaper!`] macro
-//!
-//! # Quickstart
-//!
-//! Defining some of rust's escape sequences:
-//!
-//! ```
-//! use char_escape::{Escaper, Rule};
-//!
-//! const ESCAPER: Escaper<'static> = char_escape::escaper! {
-//!     escape_char = '\\',
-//!     rules = [
-//!         '\n' => 'n',
-//!         '\r' => 'r',
-//!         '\t' => 't',
-//!         '\\' => '\\',
-//!         '\'' => '\'',
-//!         '"' => '"',
-//!     ],
-//! };
-//!
-//! let unescaped = "\n\r\t\\\'\"";
-//! let escaped = r#"\n\r\t\\\'\""#;
-//!
-//! assert_eq!(ESCAPER.escape(unescaped), escaped);
-//! assert_eq!(ESCAPER.unescape(escaped).expect("all escape sequences are valid"), unescaped);
-//! ```
-//!
-//! ```
-//! use char_escape::{Escaper, Rule};
-//!
-//! let escaper = char_escape::escaper! {
-//!     escape_char = '\\',
-//!     rules = ['\n' => 'n', ' ' => 'w'],
-//! };
-//!
-//! let unescaped = "\
-//! line1
-//! line2
-//!
-//! line3 with whitespace";
-//!
-//! let escaped = r"line1\nline2\n\nline3\wwith\wwhitespace";
-//!
-//! assert_eq!(escaper.escape(unescaped), escaped);
-//! ```
 
 #![deny(clippy::all)]
 #![warn(clippy::pedantic)]
