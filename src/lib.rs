@@ -390,7 +390,8 @@ impl<'a> Escaper<'a> {
     ///
     // TODO proptest
     /// Escaping a string and then unescaping it is guaranteed to always result in the original
-    /// string.
+    /// string if the rules are injective (meaning that no two different `chars` are mapped to the
+    /// same escape sequence).
     ///
     /// ```
     /// # use char_escape::escaper;
@@ -435,6 +436,9 @@ impl<'a> Escaper<'a> {
     ///
     /// assert_eq!(error2, Err(UnescapeError::Incomplete));
     /// ```
+    ///
+    /// Note that [`unescape()`](Escaper::unescape) will _not_ fail if the provided string is not
+    /// properly escaped.
     pub fn unescape(&self, s: &str) -> Result<String, UnescapeError> {
         let mut ret = String::with_capacity(s.len());
         let mut previous_was_escape_char = false;
