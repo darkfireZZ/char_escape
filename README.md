@@ -45,8 +45,8 @@ Check out the documentation: // TODO
 
 ## License
 
-This project is licensed under the [MIT License](../LICENSE-MIT) or
-[version 2.0 of the Apache License](../LICENSE-APACHE).
+This project is licensed under the [MIT License](./LICENSE-MIT) or
+[version 2.0 of the Apache License](./LICENSE-APACHE).
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF
 ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
