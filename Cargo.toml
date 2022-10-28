@@ -2,3 +2,6 @@
 name = "char_escape"
 version = "0.1.0"
 edition = "2021"
+
+[dev-dependencies]
+doc-comment = "0.3.3"

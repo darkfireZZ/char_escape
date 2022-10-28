@@ -556,3 +556,10 @@ impl Display for MissingEscapeCharRule {
 impl Error for MissingEscapeCharRule {}
 
 // TODO test how it handles non-ascii chars
+
+#[cfg(doctest)]
+mod readme_test {
+    use doc_comment::doctest;
+
+    doctest!("../README.md");
+}
