@@ -1,6 +1,6 @@
 //! # Overview
 //!
-//! Escape and unescape chars in strings according to custom rules.
+//! Escape and unescape chars in strings according to customizable rules.
 //!
 //! What does this crate do? It's probably best illustrated using an example:
 //!
