@@ -2,6 +2,11 @@
 name = "char_escape"
 version = "0.1.0"
 edition = "2021"
+repository = "https://github.com/darkfireZZ/char_escape"
+description = "Escape and unescape characters according to customizable rules."
+license = "MIT OR Apache-2.0"
+keywords = ["character", "escaping", "escape sequence"]
+categories = ["parsing"]
 
 [dev-dependencies]
 doc-comment = "0.3.3"

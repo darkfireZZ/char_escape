@@ -45,9 +45,13 @@
 //!  - the [`escaper!`] macro
 
 #![deny(clippy::all)]
+#![warn(clippy::cargo)]
 #![warn(clippy::pedantic)]
 #![warn(missing_docs)]
 #![allow(clippy::must_use_candidate)]
+// this lint doesn't seem to work properly
+// TODO figure out why
+#![allow(clippy::cargo_common_metadata)]
 
 use {
     core::fmt::{self, Display},
